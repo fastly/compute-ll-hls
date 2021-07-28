@@ -1,0 +1,9 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = ["Ping"]
+description = "LL-HLS Playlist Manipulator"
+language = "rust"
+manifest_version = 1
+name = "edge-ll-hls"
+service_id = ""

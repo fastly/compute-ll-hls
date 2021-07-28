@@ -1,0 +1,11 @@
+[package]
+name = "edge-ll-hls"
+version = "0.1.0"
+authors = []
+edition = "2018"
+
+[profile.release]
+debug = true
+
+[dependencies]
+fastly = "^0.6.0"
