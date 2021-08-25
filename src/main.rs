@@ -65,8 +65,12 @@ fn handle_req(mut req: Request) -> Result<(), Error> {
         None => "",
     };
 
-    // Don't cache playlists, although they should ideally be cached w/ 500ms TTL.
-    // TODO(@phu): Revisit when we can specify 500ms TTL in C@E.
+    // Don't cache playlists, although they should ideally be cached
+    // according to whether the request is non-blocking and whether
+    // the response is successful (ref:
+    // https://datatracker.ietf.org/doc/html/draft-pantos-hls-rfc8216bis#appendix-B.1).
+    // TODO(@phu): Revisit when we can set TTL based on response status.
+
     if req.get_path().ends_with(".m3u8") {
         new.set_pass(true);
     }

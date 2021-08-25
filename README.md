@@ -21,6 +21,8 @@ The intended setup is to have a customer origin provide an LL-HLS stream, and po
 
 ### Delta playlists
 
+![Delta playlist diff](delta_playlist_diff.png)
+
 Clients can request just what's changed ("delta updates") rather than the entire playlist. This is particularly helpful for longer live streams.
 
 In the LL-HLS spec, this means collapsing the parts of a playlist that are to be skipped into a single line beginning with `#EXT-X-SKIP` . This C@E app applies the playlist manipulation, using a hopefully cached version of the original playlist.
@@ -40,13 +42,12 @@ A demo app exists here: https://suddenly-ruling-quetzal.edgecompute.app/
 ----
 Run unit tests with `cargo test`.
 
-You can run the app locally using [Viceroy](https://github.com/fastly/Viceroy).
+You can run the app locally using the following:
 
-Follow the setup described in the Viceroy readme, then run  
+`fastly compute serve`
 
-`viceroy bin/main.wasm -C backends_dev.toml`
-
-Note that the Apple backend doesn't work in test.
+The backends are defined in `fastly.toml`. Note that the backends
+tend to break or stall in the test environment.
 
 ## Deploying
 

@@ -6,4 +6,11 @@ description = "LL-HLS Playlist Manipulator"
 language = "rust"
 manifest_version = 1
 name = "edge-ll-hls"
-service_id = ""
+service_id = "YOUR_SERVICE_ID_HERE"
+
+[local_server]
+  [local_server.backends]
+    [local_server.backends.video_backend]
+      url = "https://5d6e17f1ca731.streamlock.net"
+    [local_server.backends.video_backend_alt]
+      url = "https://5faee005b20a2.streamlock.net"

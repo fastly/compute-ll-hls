@@ -212,9 +212,8 @@ fn parse_playlist(
                 playlist_idx: i,
             };
             dateranges.push(daterange);
-        } else if line.starts_with("#EXT-X-ENDLIST") || line.starts_with("#EXT-X-MAP") {
+        } else if line.starts_with("#EXT-X-ENDLIST") {
             // No skipping should happen in this case, return a no-op default.
-            // TODO: #EXT-X-MAP playlists break players with #EXT-X-SKIP, why?
             return (SkipParams::noop(), segments, dateranges);
         }
         // NOTE: There's technically an extra case here since #EXT-X-VERSION must be >= 9
@@ -295,13 +294,8 @@ pub(crate) fn collapse_skipped(skip_val: &str, playlist: String) -> String {
         {
             // Write all non-skippable lines. Note that all of these should have some #EXT tag.
             if line.starts_with("#EXT-X-MEDIA-SEQUENCE") {
-                // Increment the media sequence by number of skipped segments.
                 // Write #EXT-X-SKIP right after.
-                let as_vec: Vec<&str> = line.split(":").collect();
-                let mut msn = as_vec[1].parse::<u32>().unwrap();
-                msn += skipped_segments.num_skipped_segments;
-                playlist_with_skipped.push_str(format!("#EXT-X-MEDIA-SEQUENCE:{}\n", msn).as_str());
-
+                playlist_with_skipped.push_str(format!("{}\n", line).as_str());
                 let st = skipped_segments.to_string();
                 playlist_with_skipped.push_str(st.as_str());
             } else if line.starts_with("#EXT-X-VERSION") {
